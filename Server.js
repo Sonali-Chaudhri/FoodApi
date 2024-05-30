@@ -68,56 +68,56 @@ server.get("/user", (req, res) => {
 server.use(express.static("Uploads"));
 server.use("/images", express.static("Uploads"));
 
-//initialize Razor Pay
-var razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+// //initialize Razor Pay
+// var razorpay = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET,
+// });
 
-//Payment order creation
-server.post("/razorpay", async (req, res) => {
-  const payment_capture = 1;
-  const amount = Number(req.body.amount * 100);
-  const currency = "INR";
+// //Payment order creation
+// server.post("/razorpay", async (req, res) => {
+//   const payment_capture = 1;
+//   const amount = Number(req.body.amount * 100);
+//   const currency = "INR";
 
-  const options = {
-    amount,
-    currency,
-    receipt: shortid.generate(),
-    payment_capture,
-  };
+//   const options = {
+//     amount,
+//     currency,
+//     receipt: shortid.generate(),
+//     payment_capture,
+//   };
 
-  try {
-    const response = await razorpay.orders.create(options);
-    console.log(response);
-    res.status(200).json({
-      id: response.id,
-      currency: response.currency,
-      amount:response.amount
-    });
-  } catch (error) {
-    console.log(err);
-  }
-});
-//varify payment
+//   try {
+//     const response = await razorpay.orders.create(options);
+//     console.log(response);
+//     res.status(200).json({
+//       id: response.id,
+//       currency: response.currency,
+//       amount:response.amount
+//     });
+//   } catch (error) {
+//     console.log(err);
+//   }
+// });
+// //varify payment
 
-server.post("/verification", (req, res) => {
-  const secret = "razorpaysecreate";
-  console.log(req.body);
-  const shasum = crypto.createHmac("sha256", secret);
-  shasum.update(JSON.stringify(req.body));
-  const digest = shasum.digest("hex");
-  console.log(req.headers["x-razorpay-signature"]);
+// server.post("/verification", (req, res) => {
+//   const secret = "razorpaysecreate";
+//   console.log(req.body);
+//   const shasum = crypto.createHmac("sha256", secret);
+//   shasum.update(JSON.stringify(req.body));
+//   const digest = shasum.digest("hex");
+//   console.log(req.headers["x-razorpay-signature"]);
   
-  if (digest === req.headers["x-razorpay-signature"]) {
-    console.log("request is legit");
-    res.status(200).json({
-      message: "ok",
-    });
-  } else {
-    res.status(403).json({ message: "Invalid" });
-  }
-});
+//   if (digest === req.headers["x-razorpay-signature"]) {
+//     console.log("request is legit");
+//     res.status(200).json({
+//       message: "ok",
+//     });
+//   } else {
+//     res.status(403).json({ message: "Invalid" });
+//   }
+// });
 
 
 //start theb server

@@ -19,7 +19,7 @@ server.use("/api", require("./Routes/Routes"));
 server.use(express.static("Uploads"));
 server.use("/images", express.static("Uploads"));
 
-mongoose.connect("mongodb://127.0.0.1:27017/food_Api", {
+mongoose.connect("mongodb://15.206.94.79:27017/food_Api", {
   useNewUrlParser: true,
 });
 try {

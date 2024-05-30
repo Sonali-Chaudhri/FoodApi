@@ -8,6 +8,7 @@ const path = require("path");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const shortid = require("shortid");
+const { Server } = require("http");
 require("dotenv").config();
 /////////////
 server.use(bodyparser.json());
@@ -45,6 +46,10 @@ const fileUploadConfig = multer({
     }
     cb(undefined, true);
   },
+});
+
+server.get("/", (req,res) => {
+  res.status(200).send("Hi FROM AWS")
 });
 
 server.post(
@@ -108,7 +113,7 @@ server.use("/images", express.static("Uploads"));
 //   shasum.update(JSON.stringify(req.body));
 //   const digest = shasum.digest("hex");
 //   console.log(req.headers["x-razorpay-signature"]);
-  
+
 //   if (digest === req.headers["x-razorpay-signature"]) {
 //     console.log("request is legit");
 //     res.status(200).json({
@@ -118,7 +123,6 @@ server.use("/images", express.static("Uploads"));
 //     res.status(403).json({ message: "Invalid" });
 //   }
 // });
-
 
 //start theb server
 server.listen(5000, () => {

@@ -75,11 +75,11 @@ exports.doLogin = async (req, res) => {
     res.status(500).json(error);
   }
 };
-exports.getCustomerCount=async(req,res)=>{
+exports.getCustomerCount = async (req, res) => {
   try {
-    const totalusers=await Customer.countDocuments()
-    res.status(200).json(totalusers)
+    const totalusers = await Customer.countDocuments();
+    res.status(200).json(totalusers);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-}
+};
